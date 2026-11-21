@@ -1,0 +1,27 @@
+name: k6 performance tests
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      script:
+        description: Script to run (smoke, load or stress)
+        default: load
+        type: choice
+        options: [smoke, load, stress]
+
+jobs:
+  k6:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: grafana/setup-k6-action@v1
+      - name: Run k6
+        run: |
+          mkdir -p results
+          k6 run scripts/${{ github.event.inputs.script || 'smoke' }}.js
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: k6-results
+          path: results/
