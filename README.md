@@ -44,7 +44,7 @@ lib/config.js     base URL and shared thresholds
 lib/api.js        request helpers with checks and tags (+ custom Trend metric)
 lib/summary.js    console summary + JSON output for CI
 scripts/          smoke, load, stress
-.github/workflows k6.yml: smoke on pull requests, any script on demand
+.github/workflows k6.yml: smoke on pushes to main and pull requests, any script on demand
 ```
 
 ## Notes
